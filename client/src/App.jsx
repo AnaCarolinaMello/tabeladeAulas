@@ -48,10 +48,10 @@ function App() {
 
   const handleClickButtonAgendar = () => {
     Axios.post(`${baseUrl}/agendar`, {
-      // Inicio: new Date(values.Inicio).toLocaleDateString(),
-      // Fim: new Date(values.Fim).toLocaleDateString(),
-      Inicio: values.Inicio,
-      Fim: values.Fim,
+      Inicio: new Date(values.Inicio),
+      Fim: new Date(values.Fim),
+      Teste: new Date(values.Inicio).toLocaleDateString(),
+      Maldito: new Date(values.Fim).toLocaleDateString(),
       Professor: values.Professor,
       Materia: values.Materia,
       Turma: values.Turma

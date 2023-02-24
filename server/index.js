@@ -154,14 +154,40 @@ server.post('/agendar', (req, res)=>{
         const {Turma} = req.body;
         const {Inicio} = req.body;
         const {Fim} = req.body;
+        const {Teste} = req.body;
+        const {Madilto} = req.body;
         console.log(Professor)
 
-        let insertHorarios = 'INSERT INTO Horarios(Inicio, Fim, Professor, Materia, Turma) VALUES (?,?,?,?,?)';
-        db.query(insertHorarios, [Inicio, Fim, Professor, Materia, Turma], (err, result)=>{
-            if(err){
-                console.log(err)
+        let getProf = `SELECT* FROM Horarios WHERE Professor = ${Professor} `
+        db.query(getProf, (err,result)=>{
+            if(result.length > 0){
+                let teste = 0
+                let count = 0
+                    result.forEach((value)=>{
+                        let leinicio = value.Inicio
+                        let lefim = value.Fim
+                        let Fim22 = Fim
+                        let Inicio22 = Inicio
+                        let getHorariosData = `SELECT* FROM Horarios WHERE '${Inicio22}' BETWEEN '${leinicio}' AND '${lefim}'`
+                        db.query(getHorariosData, (err,data)=>{
+                            console.log(data)
+                            if(data.length > 0){
+                                 teste = 1
+                            }
+                            if(teste != 1 && count==result.length){
+                                console.log(teste)
+                                let insertHorarios = 'INSERT INTO Horarios(Inicio, Fim, Professor, Materia, Turma) VALUES (?,?,?,?,?)';
+                            db.query(insertHorarios, [Teste, Madilto, Professor, Materia, Turma], (err, result)=>{
+                                if(err) throw err
+                                res.send(result)
+                            })
+                            }
+                        })
+                        count++
+                    })
+                    
             }else{
-                console.log(result)
+                res.send("erro")
             }
         })
     }    
